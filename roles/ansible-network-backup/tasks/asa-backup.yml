@@ -1,0 +1,22 @@
+---
+- name: Backup the config from multicontext device
+  asa_config:
+    context: "{{ current_context }}"
+    backup: yes
+  register: config_output
+  when: multicontext == true
+
+- set_fact:
+    temp_backup_file: "{{ config_output.backup_path }}"
+  when: config_output.changed == true
+
+- name: Backup the config from no multicontext device
+  asa_config:
+    backup: yes
+  register: config_output
+  when: multicontext == false
+
+  
+- set_fact:
+    temp_backup_file: "{{ config_output.backup_path }}"
+  when: config_output.changed == true
