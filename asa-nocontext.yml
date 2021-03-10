@@ -1,0 +1,13 @@
+---
+- name: ASA nocontext backup
+  hosts: asa_nocontext
+  gather_facts: no
+  strategy: linear
+
+  tasks:
+      - include_role:
+            name: ansible-network-backup
+        vars:
+            network_backup_repository: ''
+            network_backup_file: '{{ network_backup_dir }}/{{ inventory_hostname }}/{{ inventory_hostname }}.cfg'
+             

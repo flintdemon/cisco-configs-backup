@@ -1,0 +1,19 @@
+stages:
+    - deploy
+
+variables:
+    PLAY: 'backup.yml'   
+
+execute_job:
+    stage: deploy
+    tags:
+        - ansible
+    script:
+        - 'echo $ANSIBLE_VAULT_PASSWORD > .vault_pass.txt'
+        - 'echo $CISCO_ENABLE_PASSWORD | ansible-playbook $PLAY --ask-become-pass --vault-password-file .vault_pass.txt'
+        - 'rm .vault_pass.txt'
+
+    only:
+        refs:
+            - master
+    allow_failure: true

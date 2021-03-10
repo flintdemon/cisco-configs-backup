@@ -1,0 +1,37 @@
+---
+- name: ASA backup
+  hosts: asa_multicontext
+  gather_facts: no
+  strategy: linear
+
+
+  tasks:     
+      - name: Backup block
+        block:
+            - name: Discover contexts
+              asa_command:
+                  commands:
+                      - changeto system
+                      - show run context | inc context
+              register: var_contexts_names
+
+            - include_role:
+                  name: ansible-network-backup
+              vars:
+                  network_backup_repository: ''
+                  multicontext: true
+              loop:
+                  "{{ var_contexts_names.stdout_lines[1] }}"
+                       
+
+
+
+
+
+
+
+
+
+
+
+

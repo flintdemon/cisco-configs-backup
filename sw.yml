@@ -1,0 +1,16 @@
+---
+- name: Switches backup
+  hosts: sw
+  gather_facts: no
+  strategy: linear
+  vars:
+      ansible_network_os: ios
+
+
+  tasks:
+      - include_role:
+            name: ansible-network-backup
+        vars:
+            network_backup_repository: ''
+            network_backup_file: '{{ network_backup_dir }}/{{ inventory_hostname }}/{{ inventory_hostname }}.cfg'
+             
