@@ -1,0 +1,8 @@
+---
+ansible_connection: network_cli
+ansible_network_os: asa
+ansible_become: yes
+ansible_become_method: enable
+ansible_user: 
+ansible_password: 
+git_pass:
